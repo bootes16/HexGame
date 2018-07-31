@@ -37,9 +37,6 @@ public:
     
     void clear(void) { heap.clear(); }
     
-    // C++ requires that a derived type such as these vector types with a
-    // member reference need be prefixed by typename to tell the compiler it is
-    // indeed a type.
     typename std::vector<T>::iterator begin() noexcept { return heap.begin(); }
     typename std::vector<T>::iterator end() noexcept { return heap.end(); }
 
