@@ -34,26 +34,26 @@ public:
     void add_node(int id) {nodes.emplace_back(id); }
     void add_node(int id, int val) { nodes.emplace_back(id, val); }
     
-    // Create edge connections between nodes i and j with weight 1.
+    // Create edge connections between nodes i and j with weight cost.
     // Returns false if the edge already exists.
     bool add_edge(int id_i, int id_j, int cost);
+    /*
+    {
+        if (nodes[id_i].node_exists(id_j) || nodes[id_j].node_exists(id_i))
+            return false;
+        
+        nodes[id_i].add_edge(id_j, cost);
+        nodes[id_j].add_edge(id_i, cost);
+        
+        return true;
+    }
+    */
     
     // Get the number of vertices and edges in the graph.
     int num_nodes(void) { return static_cast<int>(nodes.size()); }
     
     // Get a pointer to the node at id.
     Node *get_node(int id) { return &nodes[id]; }
-    
-    // Reset the node costs.
-    /*
-    void reset_all_nodes_cost(int cost) {
-        for (auto& n : nodes)
-        {
-            n.set_val(0);
-            n.set_owner(NodeOwner::open);
-        }
-    }
-    */
     
     // Generate a random graph with edge density and cost range.
     template <class Generator>
@@ -73,8 +73,6 @@ public:
         return out;
     }
     
-    void print_summary(void);
-
 private:
     vector<Node> nodes;
 };

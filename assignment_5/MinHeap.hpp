@@ -1,6 +1,6 @@
 //
 //  MinHeap.hpp
-//  A min-heap template class for sorting arbitrary objects.
+//  A min-heap template class for sorting objects.
 //
 //  Created by Greg on 2018-06-11.
 //  Copyright © 2018 Greg. All rights reserved.

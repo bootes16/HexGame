@@ -11,7 +11,6 @@
 
 using namespace std;
 
-
 // Create edge connections between nodes i and j with weight cost.
 // Returns false if the edge already exists.
 bool Graph::add_edge(int id_i, int id_j, int cost)
@@ -24,21 +23,3 @@ bool Graph::add_edge(int id_i, int id_j, int cost)
     
     return true;
 }
-
-void Graph::print_summary(void)
-{
-    cout << "Summary\n";
-    cout << "-------\n";
-    cout << "Num Nodes: " << nodes.size() << endl;
-    
-    for (auto& n : nodes)
-    {
-        EdgeList_T *edges = n.get_edge_list();
-        cout << "  Node " << n.get_id() << ": ";
-        for (auto& e : *edges)
-            cout << "(" << e.first << ":" << e.second << ") ";
-        cout << endl;
-    }
-}
-
-
