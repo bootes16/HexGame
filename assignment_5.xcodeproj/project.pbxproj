@@ -10,7 +10,6 @@
 		3713789720A0F28C0037764E /* HexBoard.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3713789620A0F28C0037764E /* HexBoard.cpp */; };
 		3784AB6F2081607D009E2C97 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3784AB6E2081607D009E2C97 /* main.cpp */; };
 		3784AB7B208160F0009E2C97 /* ShortestPath.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3784AB75208160EF009E2C97 /* ShortestPath.cpp */; };
-		37CF5410211167C000B00952 /* Graph.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 37CF540F211167C000B00952 /* Graph.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -35,7 +34,6 @@
 		3784AB77208160F0009E2C97 /* Edge.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Edge.hpp; sourceTree = "<group>"; };
 		3784AB78208160F0009E2C97 /* ShortestPath.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = ShortestPath.hpp; sourceTree = "<group>"; };
 		3784AB7A208160F0009E2C97 /* Node.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Node.hpp; sourceTree = "<group>"; };
-		37CF540F211167C000B00952 /* Graph.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Graph.cpp; sourceTree = "<group>"; };
 		37D7D12C209E83D000A1F0B0 /* HexBoard.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = HexBoard.hpp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -69,7 +67,6 @@
 		3784AB6D2081607D009E2C97 /* assignment_5 */ = {
 			isa = PBXGroup;
 			children = (
-				37CF540F211167C000B00952 /* Graph.cpp */,
 				3784AB77208160F0009E2C97 /* Edge.hpp */,
 				3784AB76208160F0009E2C97 /* Graph.hpp */,
 				3784AB7A208160F0009E2C97 /* Node.hpp */,
@@ -140,7 +137,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				37CF5410211167C000B00952 /* Graph.cpp in Sources */,
 				3784AB7B208160F0009E2C97 /* ShortestPath.cpp in Sources */,
 				3713789720A0F28C0037764E /* HexBoard.cpp in Sources */,
 				3784AB6F2081607D009E2C97 /* main.cpp in Sources */,

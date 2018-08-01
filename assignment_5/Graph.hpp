@@ -36,8 +36,7 @@ public:
     
     // Create edge connections between nodes i and j with weight cost.
     // Returns false if the edge already exists.
-    bool add_edge(int id_i, int id_j, int cost);
-    /*
+    bool add_edge(int id_i, int id_j, int cost)
     {
         if (nodes[id_i].node_exists(id_j) || nodes[id_j].node_exists(id_i))
             return false;
@@ -47,7 +46,6 @@ public:
         
         return true;
     }
-    */
     
     // Get the number of vertices and edges in the graph.
     int num_nodes(void) { return static_cast<int>(nodes.size()); }
