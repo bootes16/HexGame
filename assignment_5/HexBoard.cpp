@@ -21,7 +21,7 @@
 //    \ / \ / \
 //     * - * - *
 //
-void HexBoard::gen_board(void)
+void HexBoard::create_graph(void)
 {
     // First row. Vertices only link left-right.
     for (auto col = 1; col < edge_sz; col++)
@@ -55,6 +55,36 @@ void HexBoard::gen_board(void)
     }
 }
 
+//
+// Create the graph representation of the Hex game board links.
+// Initialise the array of node IDs for the 4 board edges.
+// 
+void HexBoard::create_hex_board(void)
+{
+    create_graph();
+    
+    for (auto i = 0; i < edge_sz; i++)
+    {
+        edges[edge_top].push_back(i);
+        edges[edge_bot].push_back(i+(edge_sz * (edge_sz -1)));;
+        edges[edge_lft].push_back(i * edge_sz);
+        edges[edge_rgt].push_back(((i+1) * edge_sz)-1);
+    }
+}
+
+//
+// Check for a win condition for the specified marker.
+// Given that a player must have an unbroken path from one of their
+// assigned sides to the other of their assigned sides, at least one
+// marker must been placed on each of the edges assiciated with a the
+// colour for a win to even be possible. Once this condition is established,
+// find a path between markers on each edge, checking all available edge/edge
+// path cobinations which exist.
+//
+// m - Marker (player) which is to be checked for.
+//
+// Returns: true if a win condition is found for the marker colour, false otherwise.
+//
 bool HexBoard::check_win(Marker m)
 {
     pair<int,int> edge_pair = edge_pairs[m];
@@ -82,20 +112,14 @@ bool HexBoard::check_win(Marker m)
 
 //
 // Pretty-print the current state of the Hex board.
-// bs - BoardShape::normal - a standard skewed Hex game board shape.
-//      BoardShape::deskew - a retangular shape game board. Harder to make sense of but can fit
-//      a larger board size on output without wrapping.
 //
-void HexBoard::print_board(BoardShape bs)
+void HexBoard::print_board(void)
 {
     for (int row = 0; row < edge_sz; row++)
     {
         // Indent the horizontal rows normal hex board shape.
-        if (bs == BoardShape::normal)
-        {
-            for (int i = 0; i < row; i++)
-                cout << "  ";
-        }
+        for (int i = 0; i < row; i++)
+            cout << "  ";
         
         // Output the horizontal rows.
         for (int col = 0; col < edge_sz; col++)
@@ -104,16 +128,6 @@ void HexBoard::print_board(BoardShape bs)
             if ((col + 1) < edge_sz)
                 cout << " - ";
         }
-        /*
-        {
-            Node *n = g.get_node((row * edge_sz) + col);
-            
-            cout << n->get_owner_val();
-            
-            if ((col + 1) < edge_sz)
-                cout << " - ";
-        }
-        */
         cout << endl;
 
         // Last horizontal row. Don't output the diagonal edges.
@@ -121,21 +135,15 @@ void HexBoard::print_board(BoardShape bs)
             break;
         
         // Indent the diagonal vertex rows for normal hex board shape.
-        char left_diag_char = '|';
-        if (bs == BoardShape::normal)
-        {
-            cout << " ";
-            for (int i = 0; i < row; i++)
-                cout << "  ";
-            
-            left_diag_char = '\\';
-        }
+        cout << " ";
+        for (int i = 0; i < row; i++)
+            cout << "  ";
         
         // Output the diagonal vertex row.
-        cout << left_diag_char;
+        cout << "\\";
         for (int col = 0; col < edge_sz - 1; col++)
         {
-            cout << " / " << left_diag_char;
+            cout << " / \\";
         }
         cout << endl;
     }

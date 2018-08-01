@@ -1,6 +1,6 @@
 //
 //  main.cpp
-//  graph_rework
+//  Game of Hex main.
 //
 //  Created by Greg on 2018-03-25.
 //  Copyright © 2018 Greg. All rights reserved.
@@ -20,79 +20,12 @@ ostream& operator<< (ostream& out, const pair<int,int> p)
     return out;
 }
 
-void test_hex_board_paths(unsigned board_size)
-{
-    HexBoard hb(board_size);
-    Graph *g = hb.get_graph();
-    ShortestPath sp(*g);
-    
-    for (int i = 0; i < (board_size * board_size); i++)
-    {
-        for (int j = 0; j < (board_size * board_size); j++)
-        {
-            vector<int> spath;
-
-            if (i == j) continue;
-
-            int path_len = sp.shortest_path(i, j, spath);
-
-            cout << i << "->" << j << ": ";
-            for (auto i : spath)
-                cout << i << " ";
-            cout << " (length: " << path_len << ")\n";
-            //hb.print_board(owner, normal);
-            
-            spath.clear();
-        }
-    }
-
-}
-#if 0
 //
-// For the given board, find all the valid paths and shortest path for all
-// valid plays for player.
-// NB: Blue player moves left to right across the board.
-//     Red player moved bottom to top.
+// Play a game of hex between computer and human.
+// Read setup and human moves from stdin.
+// After each piece is placed on the game board, check for a winner
+// before continuing.
 //
-void test_hex_board_moves(unsigned board_size, NodeOwner player)
-{
-    HexBoard hb(board_size);
-    Graph *g = hb.get_graph();
-    ShortestPath sp(*g);
-    vector<int> start_nodes(board_size);
-    vector<int> end_nodes(board_size);
-
-    // Blue player: find left/right paths across the board.
-    if (player == blue)
-    {
-        int count = 0;
-        
-        for (int i = 0; i < board_size * board_size; i += board_size)
-        {
-            start_nodes[count] = i;
-            end_nodes[count++] = i + board_size - 1;
-        }
-    }
-    else
-    {
-        int count = 0;
-        for (int i = 0; i < board_size; i++)
-        {
-            start_nodes[count] = i;
-            end_nodes[count++] = i + ((board_size - 1) * board_size);
-        }
-    }
-    
-    for (auto i : start_nodes)
-        for (auto j : end_nodes)
-        {
-            cout << i << "->" << j << ": " << sp.shortest_path(i,j) << endl;
-            hb.print_board(BoardShape::normal);
-            // g->reset_all_nodes_cost(1);
-        }
-}
-#endif
-
 void hex_stdin(void)
 {
     int edge_sz;
@@ -108,7 +41,7 @@ void hex_stdin(void)
     cout << "Choose player colout (R)ed or (B)lue:" << endl;
     cin >> player_col;
     
-    if (player_col == 'r' || player_col == 'R')
+    if ((player_col == 'r') || (player_col == 'R'))
     {
         player_human = false;
         cout << "Computer goes first.\n";
@@ -125,11 +58,11 @@ void hex_stdin(void)
     Graph *g = hb.get_graph();
     ShortestPath sp(*g);
     
-    hb.print_board(BoardShape::normal);
+    hb.print_board();
     cout << endl;
     
     // Blue player goes first. Read in sucessive moves and validate.
-    while (true) //cin.eof())
+    while (!cin.eof())
     {
         int x_pos;
         int y_pos;
@@ -171,21 +104,17 @@ void hex_stdin(void)
         
         player_human = !player_human;
         
-        hb.print_board(BoardShape::normal);
+        hb.print_board();
         cout << endl;
     }
     
     cout << "Game over!\n";
-    hb.print_board(BoardShape::normal);
+    hb.print_board();
     cout << endl;
 }
 
 int main(int argc, char *argv[])
 {
-    //test_hex_board_paths(3);
-    //hex_board_test(5,4);
-    //test_hex_board_moves(3, blue);
-    
     hex_stdin();
     
     return 0;
