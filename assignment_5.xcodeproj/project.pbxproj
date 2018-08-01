@@ -7,7 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3713789720A0F28C0037764E /* HexBoard.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3713789620A0F28C0037764E /* HexBoard.cpp */; };
 		3784AB6F2081607D009E2C97 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3784AB6E2081607D009E2C97 /* main.cpp */; };
+		3784AB7B208160F0009E2C97 /* ShortestPath.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3784AB75208160EF009E2C97 /* ShortestPath.cpp */; };
+		37CF5410211167C000B00952 /* Graph.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 37CF540F211167C000B00952 /* Graph.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -23,8 +26,17 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		3713789620A0F28C0037764E /* HexBoard.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = HexBoard.cpp; sourceTree = "<group>"; };
+		3727D60620CDCF89000A45DA /* MinHeap.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = MinHeap.hpp; sourceTree = "<group>"; };
 		3784AB6B2081607D009E2C97 /* assignment_5 */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = assignment_5; sourceTree = BUILT_PRODUCTS_DIR; };
 		3784AB6E2081607D009E2C97 /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
+		3784AB75208160EF009E2C97 /* ShortestPath.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ShortestPath.cpp; sourceTree = "<group>"; };
+		3784AB76208160F0009E2C97 /* Graph.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Graph.hpp; sourceTree = "<group>"; };
+		3784AB77208160F0009E2C97 /* Edge.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Edge.hpp; sourceTree = "<group>"; };
+		3784AB78208160F0009E2C97 /* ShortestPath.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = ShortestPath.hpp; sourceTree = "<group>"; };
+		3784AB7A208160F0009E2C97 /* Node.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Node.hpp; sourceTree = "<group>"; };
+		37CF540F211167C000B00952 /* Graph.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Graph.cpp; sourceTree = "<group>"; };
+		37D7D12C209E83D000A1F0B0 /* HexBoard.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = HexBoard.hpp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -57,7 +69,16 @@
 		3784AB6D2081607D009E2C97 /* assignment_5 */ = {
 			isa = PBXGroup;
 			children = (
+				37CF540F211167C000B00952 /* Graph.cpp */,
+				3784AB77208160F0009E2C97 /* Edge.hpp */,
+				3784AB76208160F0009E2C97 /* Graph.hpp */,
+				3784AB7A208160F0009E2C97 /* Node.hpp */,
+				3784AB75208160EF009E2C97 /* ShortestPath.cpp */,
+				3784AB78208160F0009E2C97 /* ShortestPath.hpp */,
 				3784AB6E2081607D009E2C97 /* main.cpp */,
+				37D7D12C209E83D000A1F0B0 /* HexBoard.hpp */,
+				3713789620A0F28C0037764E /* HexBoard.cpp */,
+				3727D60620CDCF89000A45DA /* MinHeap.hpp */,
 			);
 			path = assignment_5;
 			sourceTree = "<group>";
@@ -88,7 +109,7 @@
 		3784AB632081607D009E2C97 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0920;
+				LastUpgradeCheck = 0930;
 				ORGANIZATIONNAME = Greg;
 				TargetAttributes = {
 					3784AB6A2081607D009E2C97 = {
@@ -119,6 +140,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				37CF5410211167C000B00952 /* Graph.cpp in Sources */,
+				3784AB7B208160F0009E2C97 /* ShortestPath.cpp in Sources */,
+				3713789720A0F28C0037764E /* HexBoard.cpp in Sources */,
 				3784AB6F2081607D009E2C97 /* main.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -140,6 +164,7 @@
 				CLANG_WARN_BOOL_CONVERSION = YES;
 				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
 				CLANG_WARN_EMPTY_BODY = YES;
@@ -147,6 +172,7 @@
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
@@ -195,6 +221,7 @@
 				CLANG_WARN_BOOL_CONVERSION = YES;
 				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
 				CLANG_WARN_EMPTY_BODY = YES;
@@ -202,6 +229,7 @@
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
