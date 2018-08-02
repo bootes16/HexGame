@@ -23,13 +23,21 @@
 void HexBoard::create_graph(void)
 {
     // First row. Vertices only link left-right.
+    //
+    // 0 - 1 - 2
+    //
     for (auto col = 1; col < edge_sz; col++)
         g.add_edge(col - 1, col, 1);
 
     // Each subsequent row.
     for (auto row = 1; row < edge_sz; row++)
     {
-        // First row. Vertices only link left-right.
+        // Link vertices left - right.
+        //
+        // 0 - 1 - 2
+        //
+        //   3 - 4 - 5
+        //
         for (auto col = 1; col < edge_sz; col++)
         {
             auto from_id = (row * edge_sz) + (col - 1);
@@ -38,6 +46,11 @@ void HexBoard::create_graph(void)
         }
             
         // For each vertex (except last in the row) link to two adjcent vertices on previous row.
+        //
+        // 0 - 1 - 2
+        //  \ / \ /
+        //   3 - 4 - 5
+        //
         for (auto col = 0; col < (edge_sz - 1); col++)
         {
             auto from_id = (row * edge_sz) + col;
@@ -48,6 +61,11 @@ void HexBoard::create_graph(void)
         }
         
         // Vertex in last column. Only link to last vertex in previous row.
+        //
+        // 0 - 1 - 2
+        //  \ / \ / \
+        //   3 - 4 - 5
+        //
         auto from_id = (row + 1) * edge_sz - 1;
         auto to_id = row * edge_sz - 1;
         g.add_edge(from_id, to_id, 1);
