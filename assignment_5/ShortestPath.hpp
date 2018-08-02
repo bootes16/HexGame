@@ -22,12 +22,16 @@
 
 using namespace std;
 
+//
+// The heap node data type used for the min-heap.
+// These heap nodes are used in the open set for the Djikstra shortest path algorithm
+// to make sorting of nodes by their value easier.
+//
 struct HeapNode
 {
     int NodeId;
     int NodeVal;
 };
-
 
 class ShortestPath
 {
@@ -42,8 +46,6 @@ public:
         vector<int> spath;
         return shortest_path(id_i, id_j, spath);
     }
-        
-    bool update_node_values(HeapNode& hn);
     
 private:
     Graph& g;
@@ -52,6 +54,8 @@ private:
     
     // Tracking the shortest path back to the start node.
     unordered_map<int,int> back_map;
+
+    bool update_node_values(HeapNode& hn);
 };
 
 #endif /* dijkstra_hpp */

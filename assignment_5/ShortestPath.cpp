@@ -16,6 +16,10 @@
 
 using namespace std;
 
+//
+// Comparison function for the min-heap nodes. This allows the min-heap
+// to sort the nodes based on the value of the nodes.
+//
 bool operator> (const HeapNode lhs, const HeapNode rhs) { return lhs.NodeVal > rhs.NodeVal; }
 ostream& operator<< (ostream& out, const HeapNode& hn)
 {
@@ -69,6 +73,12 @@ bool ShortestPath::update_node_values(HeapNode& hn)
 // value is returned and the list of graph node IDs, from id_i to id_j, are
 // passed back via the spath vector provided.
 //
+// id_i         - The node ID to start the search from.
+// id_j         - The destination node to find the path to.
+// spath        - Vector of node IDs which for a path from id_i to id_j.
+//
+// Returns: The cost of the shortest path found from id_i to id_j on success, 0 if no path was found.
+//
 int ShortestPath::shortest_path(int id_i, int id_j, vector<int>& spath)
 {
     if (id_i >= g.num_nodes() || id_j >= g.num_nodes())
@@ -121,8 +131,18 @@ int ShortestPath::shortest_path(int id_i, int id_j, vector<int>& spath)
     return hn.NodeVal;
 }
 
-// inc_nodes is the set of nodes to initialise the open_set to. id_i and id_j should be in inc_nodes.
-// If inc_nodes is empty (size 0), then the open set is initialised from all the nodes in the graph.
+//
+// Find the shortest path from node id_i to node id_j if possible.
+// The nodes searched for this shortest path, including the start and end nodes, must be in
+// the set inc_nodes.
+//
+// id_i         - The node ID to start the search from.
+// id_j         - The destination node to find the path to.
+// inc_nodes    - The set of node IDs which are allowed to form the path.
+// spath        - Vector of node IDs which for a path from id_i to id_j.
+//
+// Returns: The cost of the shortest path found from id_i to id_j on success, 0 if no path was found.
+//
 int ShortestPath::shortest_path(int id_i, int id_j, unordered_set<int>& inc_nodes, vector<int>& spath)
 {
     if (id_i >= g.num_nodes() || id_j >= g.num_nodes())
@@ -167,10 +187,7 @@ int ShortestPath::shortest_path(int id_i, int id_j, unordered_set<int>& inc_node
         
         // destination node unreachable.
         if (hn.NodeVal == NodeValMax)
-        {
-            //cout << "Destination node " << id_j << " unreachable from node " << id_i << endl;
             return 0;
-        }
     }
  
     if (hn.NodeId != id_j)

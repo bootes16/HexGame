@@ -6,7 +6,6 @@
 //  Created by Greg on 2018-05-8.
 //  Copyright © 2018 Greg. All rights reserved.
 //
-#include "Node.hpp"
 #include "Graph.hpp"
 #include "HexBoard.hpp"
 #include "ShortestPath.hpp"
@@ -70,6 +69,23 @@ void HexBoard::create_hex_board(void)
         edges[edge_lft].push_back(i * edge_sz);
         edges[edge_rgt].push_back(((i+1) * edge_sz)-1);
     }
+}
+
+//
+// Attempt to place a marker at the given board coordinates.
+//
+// Returns: true if the marker was placed, false if a marker was already present.
+//
+bool HexBoard::place_marker(unsigned x, unsigned y, Marker m) {
+    auto idx = xy2idx(x,y);
+    if (markers.at(idx) != Marker::empty)
+        return false;
+    
+    placed_markers[m].insert(idx);
+    
+    markers[idx] = m;
+    n_places--;
+    return true;
 }
 
 //

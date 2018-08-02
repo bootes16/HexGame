@@ -9,12 +9,9 @@
 #define HEXBOARD_HPP
 
 #include <vector>
-#include <unordered_map>
 #include <unordered_set>
 
 #include "Graph.hpp"
-#include "Node.hpp"
-#include "ShortestPath.hpp"
 
 using namespace std;
 
@@ -59,29 +56,11 @@ public:
             create_hex_board();
         }
     
-    Graph *get_graph(void) { return &g; }
-    
-    inline unsigned xy2idx(unsigned x, unsigned y) { return x + (y * edge_sz); }
-    
-    //bool place(unsigned x, unsigned y, NodeOwner owner).;
     bool n_places_left(void) { return n_places; }
     
-    bool place_marker(unsigned x, unsigned y, Marker m) {
-        auto idx = xy2idx(x,y);
-        if (markers.at(idx) != Marker::empty)
-            return false;
-        
-        placed_markers[m].insert(idx);
-        
-        markers[idx] = m;
-        n_places--;
-        return true;
-    }
+    bool place_marker(unsigned x, unsigned y, Marker m);
     
     bool check_win(Marker m);
-    
-    bool set_red(unsigned x, unsigned y) { return place_marker(x, y, mark_red); }
-    bool set_blue(unsigned x, unsigned y) { return place_marker(x, y, mark_blu); }
     
     void print_board(void);
     
@@ -97,8 +76,10 @@ private:
     // A set for each marker colour to hold IDs of placed markers for quick lookup.
     unordered_set<int> placed_markers[nMarkers];
     
+    inline unsigned xy2idx(unsigned x, unsigned y) { return x + (y * edge_sz); }
     void create_hex_board(void);
     void create_graph(void);
 };
+
 
 #endif /* HEXBOARD_HPP */

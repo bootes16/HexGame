@@ -7,18 +7,8 @@
 //
 
 #include <iostream>
-#include <vector>
 #include <random>
-#include "Node.hpp"
-#include "Graph.hpp"
-#include "ShortestPath.hpp"
 #include "HexBoard.hpp"
-
-ostream& operator<< (ostream& out, const pair<int,int> p)
-{
-    out << "[" << p.first << ":" << p.second << "]";
-    return out;
-}
 
 //
 // Play a game of hex between computer and human.
@@ -55,8 +45,6 @@ void hex_stdin(void)
     Marker marker_computer = static_cast<Marker>(!player_human);
     
     HexBoard hb(edge_sz);
-    Graph *g = hb.get_graph();
-    ShortestPath sp(*g);
     
     hb.print_board();
     cout << endl;
