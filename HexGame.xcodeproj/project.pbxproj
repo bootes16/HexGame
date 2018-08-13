@@ -27,7 +27,7 @@
 /* Begin PBXFileReference section */
 		3713789620A0F28C0037764E /* HexBoard.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = HexBoard.cpp; sourceTree = "<group>"; };
 		3727D60620CDCF89000A45DA /* MinHeap.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = MinHeap.hpp; sourceTree = "<group>"; };
-		3784AB6B2081607D009E2C97 /* assignment_5 */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = assignment_5; sourceTree = BUILT_PRODUCTS_DIR; };
+		3784AB6B2081607D009E2C97 /* HexGame */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = HexGame; sourceTree = BUILT_PRODUCTS_DIR; };
 		3784AB6E2081607D009E2C97 /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
 		3784AB75208160EF009E2C97 /* ShortestPath.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ShortestPath.cpp; sourceTree = "<group>"; };
 		3784AB76208160F0009E2C97 /* Graph.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Graph.hpp; sourceTree = "<group>"; };
@@ -50,7 +50,7 @@
 		3784AB622081607D009E2C97 = {
 			isa = PBXGroup;
 			children = (
-				3784AB6D2081607D009E2C97 /* assignment_5 */,
+				3784AB6D2081607D009E2C97 /* HexGame */,
 				3784AB6C2081607D009E2C97 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -58,12 +58,12 @@
 		3784AB6C2081607D009E2C97 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				3784AB6B2081607D009E2C97 /* assignment_5 */,
+				3784AB6B2081607D009E2C97 /* HexGame */,
 			);
 			name = Products;
 			sourceTree = "<group>";
 		};
-		3784AB6D2081607D009E2C97 /* assignment_5 */ = {
+		3784AB6D2081607D009E2C97 /* HexGame */ = {
 			isa = PBXGroup;
 			children = (
 				3784AB76208160F0009E2C97 /* Graph.hpp */,
@@ -75,15 +75,15 @@
 				3713789620A0F28C0037764E /* HexBoard.cpp */,
 				3727D60620CDCF89000A45DA /* MinHeap.hpp */,
 			);
-			path = assignment_5;
+			path = HexGame;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		3784AB6A2081607D009E2C97 /* assignment_5 */ = {
+		3784AB6A2081607D009E2C97 /* HexGame */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 3784AB722081607D009E2C97 /* Build configuration list for PBXNativeTarget "assignment_5" */;
+			buildConfigurationList = 3784AB722081607D009E2C97 /* Build configuration list for PBXNativeTarget "HexGame" */;
 			buildPhases = (
 				3784AB672081607D009E2C97 /* Sources */,
 				3784AB682081607D009E2C97 /* Frameworks */,
@@ -93,9 +93,9 @@
 			);
 			dependencies = (
 			);
-			name = assignment_5;
-			productName = assignment_5;
-			productReference = 3784AB6B2081607D009E2C97 /* assignment_5 */;
+			name = HexGame;
+			productName = HexGame;
+			productReference = 3784AB6B2081607D009E2C97 /* HexGame */;
 			productType = "com.apple.product-type.tool";
 		};
 /* End PBXNativeTarget section */
@@ -113,7 +113,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 3784AB662081607D009E2C97 /* Build configuration list for PBXProject "assignment_5" */;
+			buildConfigurationList = 3784AB662081607D009E2C97 /* Build configuration list for PBXProject "HexGame" */;
 			compatibilityVersion = "Xcode 8.0";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -125,7 +125,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				3784AB6A2081607D009E2C97 /* assignment_5 */,
+				3784AB6A2081607D009E2C97 /* HexGame */,
 			);
 		};
 /* End PBXProject section */
@@ -270,7 +270,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		3784AB662081607D009E2C97 /* Build configuration list for PBXProject "assignment_5" */ = {
+		3784AB662081607D009E2C97 /* Build configuration list for PBXProject "HexGame" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				3784AB702081607D009E2C97 /* Debug */,
@@ -279,7 +279,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		3784AB722081607D009E2C97 /* Build configuration list for PBXNativeTarget "assignment_5" */ = {
+		3784AB722081607D009E2C97 /* Build configuration list for PBXNativeTarget "HexGame" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				3784AB732081607D009E2C97 /* Debug */,
