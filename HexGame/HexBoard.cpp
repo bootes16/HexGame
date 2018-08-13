@@ -149,12 +149,13 @@ bool HexBoard::check_win(Marker m)
 //
 void HexBoard::print_board(void)
 {
+    cout << "\n  ^ \n RED   < BLUE >\n  v \n" << endl;
     for (int row = 0; row < edge_sz; row++)
     {
         // Indent the horizontal rows normal hex board shape.
         for (int i = 0; i < row; i++)
             cout << "  ";
-        
+
         // Output the horizontal rows.
         for (int col = 0; col < edge_sz; col++)
         {
