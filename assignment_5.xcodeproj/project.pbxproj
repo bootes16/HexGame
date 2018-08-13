@@ -31,7 +31,6 @@
 		3784AB6E2081607D009E2C97 /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
 		3784AB75208160EF009E2C97 /* ShortestPath.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ShortestPath.cpp; sourceTree = "<group>"; };
 		3784AB76208160F0009E2C97 /* Graph.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Graph.hpp; sourceTree = "<group>"; };
-		3784AB77208160F0009E2C97 /* Edge.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Edge.hpp; sourceTree = "<group>"; };
 		3784AB78208160F0009E2C97 /* ShortestPath.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = ShortestPath.hpp; sourceTree = "<group>"; };
 		3784AB7A208160F0009E2C97 /* Node.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Node.hpp; sourceTree = "<group>"; };
 		37D7D12C209E83D000A1F0B0 /* HexBoard.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = HexBoard.hpp; sourceTree = "<group>"; };
@@ -67,7 +66,6 @@
 		3784AB6D2081607D009E2C97 /* assignment_5 */ = {
 			isa = PBXGroup;
 			children = (
-				3784AB77208160F0009E2C97 /* Edge.hpp */,
 				3784AB76208160F0009E2C97 /* Graph.hpp */,
 				3784AB7A208160F0009E2C97 /* Node.hpp */,
 				3784AB75208160EF009E2C97 /* ShortestPath.cpp */,
