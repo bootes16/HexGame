@@ -18,34 +18,47 @@
 // After each piece is placed on the game board, check for a winner
 // before continuing.
 //
-void hex_human_computer()
+void create_game(int edge_sz, bool ai_v_ai, StoneColour human_colour = None)
 {
-    int edge_sz;
-    char player_col;
-    
-    cout << "Enter board size (e.g. 11):" << endl;
-    cin >> edge_sz;
-    
-    cout << "Choose player colour (R)ed or (B)lue:" << endl;
-    cin >> player_col;
-    
-    StoneColour human_colour = Blue;
-    StoneColour computer_colour = Red;
-    if ((player_col == 'r') || (player_col == 'R'))
+    if (edge_sz <= 0)
     {
-        human_colour = Red;
-        computer_colour = Blue;
-        cout << "Computer goes first.\n";
-    }
-    else
-    {
-        cout << "Human goes first.\n";
+        cout << "Enter board size (e.g. 11):" << endl;
+        cin >> edge_sz;
     }
     
     HexBoard hb(edge_sz);
     
-    HexGame hg(
-        hb,
+    if (ai_v_ai)
+    {
+        cout << "Computer vs Computer: Blue AI goes first." << endl;
+        HexGame hg(hb,
+            make_unique<ComputerPlayer>(Blue, edge_sz),
+            make_unique<ComputerPlayer>(Red, edge_sz));
+        hg.run();
+        cout << endl;
+        return;
+    }
+    
+    if (human_colour == None)
+    {
+        char player_col;
+        cout << "Choose player colour (R)ed or (B)lue:" << endl;
+        cin >> player_col;
+        
+        if ((player_col == 'r') || (player_col == 'R'))
+            human_colour = Red;
+        else
+            human_colour = Blue;
+    }
+    
+    StoneColour computer_colour = static_cast<StoneColour>(human_colour ^ 3);
+    
+    if (human_colour == Blue)
+        cout << "Computer goes first.\n";
+    else
+        cout << "Human goes first.\n";
+    
+    HexGame hg(hb,
         make_unique<HumanPlayer>(human_colour),
         make_unique<ComputerPlayer>(computer_colour, edge_sz));
     
@@ -54,9 +67,44 @@ void hex_human_computer()
     cout << endl;
 }
 
+//
+// Usage: [-b <size>] [-a] [-c (r)ed|(b)lue]
+//
 int main(int argc, char *argv[])
 {
-    hex_human_computer();
+    int edge_sz {0};
+    bool ai_v_ai {false};
+    StoneColour human_colour {None};
+    
+    while (--argc > 0)
+    {
+        if (argv[argc][0] != '-')
+            continue;
+        
+        switch (argv[argc][1])
+        {
+        case 'b':
+            edge_sz = atoi(argv[argc+1]);
+            break;
+
+        case 'a':
+            ai_v_ai = true;
+            break;
+            
+        case 'c':
+            if (argv[argc+1][0] == 'R' || argv[argc+1][0] == 'r')
+                human_colour = Red;
+            else
+                human_colour = Blue;
+            break;
+            
+        default:
+            cout << "Usage: " << argv[0] << " [-b <size>] [-a] [-c (r)ed|(b)lue]\n";
+            return 0;
+        }
+    }
+    
+    create_game(edge_sz, ai_v_ai, human_colour);
     
     return 0;
 }
