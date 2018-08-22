@@ -94,12 +94,12 @@ void HexBoard::create_hex_board(void)
 //
 // Returns: true if the marker was placed, false if a marker was already present.
 //
-bool HexBoard::place_marker(unsigned x, unsigned y, Marker m) {
+bool HexBoard::place_marker(unsigned x, unsigned y, StoneColour m) {
     auto idx = xy2idx(x,y);
-    if (markers.at(idx) != Marker::empty)
+    if (markers.at(idx) != None)
         return false;
     
-    placed_markers[m].insert(idx);
+    placed_markers[m-1].insert(idx);
     
     markers[idx] = m;
     n_places--;
@@ -119,24 +119,24 @@ bool HexBoard::place_marker(unsigned x, unsigned y, Marker m) {
 //
 // Returns: true if a win condition is found for the marker colour, false otherwise.
 //
-bool HexBoard::check_win(Marker m)
+bool HexBoard::check_win(StoneColour m)
 {
-    pair<int,int> edge_pair = edge_pairs[m];
+    pair<int,int> edge_pair = edge_pairs[m-1];
     ShortestPath sp(g);
     
     for (auto id_i : edges[edge_pair.first])
     {
-        if (placed_markers[m].count(id_i) == 0)
+        if (placed_markers[m-1].count(id_i) == 0)
             continue;
         
         for (auto id_j : edges[edge_pair.second])
         {
-            if (placed_markers[m].count(id_j) == 0)
+            if (placed_markers[m-1].count(id_j) == 0)
                 continue;
             
             // find path
             vector<int> spath;
-            if (sp.shortest_path(id_i, id_j, placed_markers[m], spath) != 0)
+            if (sp.shortest_path(id_i, id_j, placed_markers[m-1], spath) != 0)
                 return true;
         }
     }
@@ -159,7 +159,7 @@ void HexBoard::print_board(void)
         // Output the horizontal rows.
         for (int col = 0; col < edge_sz; col++)
         {
-            cout << MarkChr.at(markers.at(xy2idx(col,row)));
+            cout << ColourChr[markers.at(xy2idx(col,row))];
             if ((col + 1) < edge_sz)
                 cout << " - ";
         }

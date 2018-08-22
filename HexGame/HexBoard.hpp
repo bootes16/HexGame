@@ -30,20 +30,31 @@ using namespace std;
 //           R   E   D
 //
 
+const string ColourStr[] = { "None", "Blue", "Red" };
+const char ColourChr[] = { '.', 'B', 'R' };
+
 // Enumerations for identifying the 4 board edges.
 enum HexEdges { edge_top = 0, edge_bot, edge_lft, edge_rgt };
 const int nHexEdges {4};
 
 // Possible values of place marks.
-enum Marker { mark_red = 0, mark_blu, empty };
+enum StoneColour { None = 0, Red, Blue};
 const int nMarkers {2};
+
+inline ostream& operator<< (ostream& out, const StoneColour sc)
+{
+    out << ColourChr[sc];
+    return out;
+}
+
+inline const string& StoneString(const StoneColour sc) { return ColourStr[sc]; }
 
 // Assign edges to colours.
 const pair<int,int> edge_pairs[nMarkers] { { edge_top, edge_bot }, { edge_lft, edge_rgt }};
 
 // Identification of players and pretty printing.
-const vector<string> MarkColourStr { "Red", "Blue" };
-const vector<char> MarkChr { 'R', 'B', '.' };
+//const vector<string> MarkColourStr { "Red", "Blue" };
+//const vector<char> MarkChr { 'R', 'B', '.' };
 
 class HexBoard
 {
@@ -51,16 +62,16 @@ public:
     HexBoard() = delete;
     HexBoard(unsigned edge_sz) :
         g{Graph(edge_sz * edge_sz)}, edge_sz{edge_sz}, n_places{edge_sz * edge_sz},
-        markers(n_places, Marker::empty)
+        markers(n_places, None)
         {
             create_hex_board();
         }
     
     bool n_places_left(void) { return n_places; }
     
-    bool place_marker(unsigned x, unsigned y, Marker m);
+    bool place_marker(unsigned x, unsigned y, StoneColour m);
     
-    bool check_win(Marker m);
+    bool check_win(StoneColour m);
     
     void print_board(void);
     
@@ -68,7 +79,7 @@ private:
     Graph g;
     unsigned edge_sz {0};
     unsigned n_places {0};
-    vector<Marker> markers;
+    vector<StoneColour> markers;
     
     // Vector of node indexes for each board edge.
     vector<unsigned> edges[nHexEdges];
