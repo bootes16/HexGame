@@ -22,7 +22,7 @@ StoneColour HumanPlayer::make_move(HexBoard& h)
     if (h.check_win(sc))
     {
         cout << "Human wins!\n";
-        return this->sc;
+        return sc;
     }
     
     return None;
@@ -32,16 +32,16 @@ StoneColour ComputerPlayer::make_move(HexBoard& h)
 {
     int x_pos, y_pos;
     do {
-        x_pos = this->d(this->e);
-        y_pos = this->d(this->e);
+        x_pos = d(e);
+        y_pos = d(e);
         cout << "Computer tries: " << x_pos << "," << y_pos << endl;
     }
-    while (!h.place_marker(x_pos, y_pos, this->sc));
+    while (!h.place_marker(x_pos, y_pos, sc));
 
-    if (h.check_win(this->sc))
+    if (h.check_win(sc))
     {
-        cout << ColourStr[this->sc] << " computer wins!\n";
-        return this->sc;
+        cout << ColourStr[sc] << " computer wins!\n";
+        return sc;
     }
     
     return None;

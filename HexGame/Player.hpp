@@ -50,8 +50,8 @@ class ComputerPlayer : public Player {
 public:
     ComputerPlayer(StoneColour sc, int edge_size) : Player(sc), d{uniform_int_distribution<>(0,edge_size-1)} {}
     ComputerPlayer(const ComputerPlayer& cp) : Player(cp.sc) {
-        this->e = cp.e;
-        this->d = cp.d;
+        e = cp.e;
+        d = cp.d;
     }
     ComputerPlayer(ComputerPlayer&& cp) : Player(move(cp.sc)), e{move(cp.e)}, d{move(cp.d)} {}
 

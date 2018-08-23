@@ -28,19 +28,19 @@ public:
     // Copy constructor.
     Node(const Node& n)
     {
-        this->id = n.id;
-        this->val = n.val;
-        this->edges = n.edges;
-        this->sp_back = n.sp_back;
+        id = n.id;
+        val = n.val;
+        edges = n.edges;
+        sp_back = n.sp_back;
     }
     
     // Copy assignment.
     Node& operator= (const Node& n)
     {
-        this->id = n.id;
-        this->val = n.val;
-        this->edges = n.edges;
-        this->sp_back = n.sp_back;
+        id = n.id;
+        val = n.val;
+        edges = n.edges;
+        sp_back = n.sp_back;
         return *this;
     }
     

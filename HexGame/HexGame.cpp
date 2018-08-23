@@ -10,16 +10,16 @@
 
 void HexGame::run()
 {
-    this->hb.print_board();
+    hb.print_board();
     
     while
     (
-        this->plyrs[Blue]->make_move(hb) == None
+        plyrs[Blue]->make_move(hb) == None
         &&
-        this->plyrs[Red]->make_move(hb) == None
+        plyrs[Red]->make_move(hb) == None
     )
-        this->hb.print_board();
+        hb.print_board();
 
-    this->hb.print_board();
+    hb.print_board();
 }
 
