@@ -21,7 +21,6 @@ class HexGame
 {
 public:
     HexGame(HexBoard& hb, unique_ptr<Player> plyr_a, unique_ptr<Player> plyr_b) : hb{hb} {
-        plyrs[0] = nullptr; // Dummy slot. Indexed by StoneColour value, no "Empty" player.
         plyrs[plyr_a->get_colour()] = move(plyr_a);
         plyrs[plyr_b->get_colour()] = move(plyr_b);
     }
@@ -29,7 +28,7 @@ public:
     void run();
 private:
     HexBoard hb;
-    array<unique_ptr<Player>, 3> plyrs; // Player 0 is nullptr so player index can be StoneColour.
+    array<unique_ptr<Player>, nStoneColours> plyrs;
 };
 
 #endif /* HEXGAME_HPP */

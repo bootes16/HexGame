@@ -6,6 +6,7 @@
 //  Created by Greg on 2018-05-8.
 //  Copyright © 2018 Greg. All rights reserved.
 //
+#include <iomanip>
 #include "Graph.hpp"
 #include "HexBoard.hpp"
 #include "ShortestPath.hpp"
@@ -99,7 +100,7 @@ bool HexBoard::place_marker(unsigned x, unsigned y, StoneColour m) {
     if (markers.at(idx) != None)
         return false;
     
-    placed_markers[m-1].insert(idx);
+    placed_markers[m].insert(idx);
     
     markers[idx] = m;
     n_places--;
@@ -121,22 +122,22 @@ bool HexBoard::place_marker(unsigned x, unsigned y, StoneColour m) {
 //
 bool HexBoard::check_win(StoneColour m)
 {
-    pair<int,int> edge_pair = edge_pairs[m-1];
+    pair<int,int> edge_pair = edge_pairs[m];
     ShortestPath sp(g);
     
     for (auto id_i : edges[edge_pair.first])
     {
-        if (placed_markers[m-1].count(id_i) == 0)
+        if (placed_markers[m].count(id_i) == 0)
             continue;
         
         for (auto id_j : edges[edge_pair.second])
         {
-            if (placed_markers[m-1].count(id_j) == 0)
+            if (placed_markers[m].count(id_j) == 0)
                 continue;
             
             // find path
             vector<int> spath;
-            if (sp.shortest_path(id_i, id_j, placed_markers[m-1], spath) != 0)
+            if (sp.shortest_path(id_i, id_j, placed_markers[m], spath) != 0)
                 return true;
         }
     }
@@ -149,7 +150,25 @@ bool HexBoard::check_win(StoneColour m)
 //
 void HexBoard::print_board(void)
 {
-    cout << "\n  ^ \n RED   < BLUE >\n  v \n" << endl;
+    cout << "\n  ^ \n RED   < BLUE >\n  v" << endl;
+    
+    // Number the top row.
+    cout << "   ";
+    for (int col = 0; col < edge_sz - 1; col++)
+        if (col < 10)
+            cout << "    ";
+        else
+            cout << col / 10 << "   ";
+    
+    cout << (edge_sz - 1) / 10 << endl;
+
+    cout << "   ";
+    for (int col = 0; col < edge_sz - 1; col++)
+        cout << col % 10 << "   ";
+    
+    cout << (edge_sz - 1) % 10 << endl;
+
+    
     for (int row = 0; row < edge_sz; row++)
     {
         // Indent the horizontal rows normal hex board shape.
@@ -157,6 +176,7 @@ void HexBoard::print_board(void)
             cout << "  ";
 
         // Output the horizontal rows.
+        cout << setw(2) << row << " ";
         for (int col = 0; col < edge_sz; col++)
         {
             cout << ColourChr[markers.at(xy2idx(col,row))];
@@ -175,7 +195,7 @@ void HexBoard::print_board(void)
             cout << "  ";
         
         // Output the diagonal vertex row.
-        cout << "\\";
+        cout << "   \\";
         for (int col = 0; col < edge_sz - 1; col++)
         {
             cout << " / \\";

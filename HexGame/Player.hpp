@@ -55,10 +55,36 @@ public:
     }
     ComputerPlayer(ComputerPlayer&& cp) : Player(move(cp.sc)), e{move(cp.e)}, d{move(cp.d)} {}
 
-    StoneColour make_move(HexBoard& h) final;
-private:
+    virtual StoneColour make_move(HexBoard& h) = 0;
+protected:
     default_random_engine e;
     uniform_int_distribution<int> d;
+};
+
+//
+// ComputerRandom
+// Simple random moving computer AI.
+//
+class ComputerRandom : public ComputerPlayer {
+public:
+    ComputerRandom(StoneColour sc, int edge_size) : ComputerPlayer(sc, edge_size) {}
+    ComputerRandom(const ComputerRandom& cp) : ComputerPlayer(cp) {}
+    ComputerRandom(ComputerRandom&& cp) : ComputerPlayer(cp) {}
+    
+    StoneColour make_move(HexBoard& h) final;
+};
+
+//
+// ComputerMC
+// Computer player utilising Monte Carlo simulation to evaluate and make a move.
+//
+class ComputerMC : public ComputerPlayer {
+public:
+    ComputerMC(StoneColour sc, int edge_size) : ComputerPlayer(sc, edge_size) {}
+    ComputerMC(const ComputerMC& cp) : ComputerPlayer(cp) {}
+    ComputerMC(ComputerMC&& cp) : ComputerPlayer(cp) {}
+    
+    StoneColour make_move(HexBoard& h) final;
 };
 
 #endif /* PLAYER_HPP */

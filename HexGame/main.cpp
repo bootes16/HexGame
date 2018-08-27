@@ -32,8 +32,8 @@ void create_game(int edge_sz, bool ai_v_ai, StoneColour human_colour = None)
     {
         cout << "Computer vs Computer: Blue AI goes first." << endl;
         HexGame hg(hb,
-            make_unique<ComputerPlayer>(Blue, edge_sz),
-            make_unique<ComputerPlayer>(Red, edge_sz));
+            make_unique<ComputerRandom>(Blue, edge_sz),
+            make_unique<ComputerRandom>(Red, edge_sz));
         hg.run();
         cout << endl;
         return;
@@ -51,16 +51,16 @@ void create_game(int edge_sz, bool ai_v_ai, StoneColour human_colour = None)
             human_colour = Blue;
     }
     
-    StoneColour computer_colour = static_cast<StoneColour>(human_colour ^ 3);
+    StoneColour computer_colour = static_cast<StoneColour>(!human_colour);
     
     if (human_colour == Blue)
-        cout << "Computer goes first.\n";
-    else
         cout << "Human goes first.\n";
+    else
+        cout << "Computer goes first.\n";
     
     HexGame hg(hb,
         make_unique<HumanPlayer>(human_colour),
-        make_unique<ComputerPlayer>(computer_colour, edge_sz));
+        make_unique<ComputerRandom>(computer_colour, edge_sz));
     
     hg.run();
     

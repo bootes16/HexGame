@@ -9,12 +9,15 @@
 #include "HexBoard.hpp"
 #include "Player.hpp"
 
+//
+// make_move
+// Human player makes a move by specifying the 
 StoneColour HumanPlayer::make_move(HexBoard& h)
 {
     unsigned row, col;
     cout << "Move human (row col):\n";
-    cin >> col;
     cin >> row;
+    cin >> col;
     
     while (!h.place_marker(col, row, sc))
         cout << "Invalid move human! Try again.\n";
@@ -28,7 +31,7 @@ StoneColour HumanPlayer::make_move(HexBoard& h)
     return None;
 }
 
-StoneColour ComputerPlayer::make_move(HexBoard& h)
+StoneColour ComputerRandom::make_move(HexBoard& h)
 {
     int x_pos, y_pos;
     do {

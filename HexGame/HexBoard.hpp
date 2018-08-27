@@ -30,16 +30,10 @@ using namespace std;
 //           R   E   D
 //
 
-const string ColourStr[] = { "None", "Blue", "Red" };
-const char ColourChr[] = { '.', 'B', 'R' };
-
-// Enumerations for identifying the 4 board edges.
-enum HexEdges { edge_top = 0, edge_bot, edge_lft, edge_rgt };
-const int nHexEdges {4};
-
-// Possible values of place marks.
-enum StoneColour { None = 0, Red, Blue};
-const int nMarkers {2};
+const string ColourStr[] = { "Blue", "Red", "None" };
+const char ColourChr[] = { 'B', 'R', '.' };
+enum StoneColour { Blue = 0, Red, None };
+const int nStoneColours {2};
 
 inline ostream& operator<< (ostream& out, const StoneColour sc)
 {
@@ -47,14 +41,14 @@ inline ostream& operator<< (ostream& out, const StoneColour sc)
     return out;
 }
 
+// Enumerations for identifying the 4 board edges.
+enum HexEdges { edge_top = 0, edge_bot, edge_lft, edge_rgt };
+const int nHexEdges {4};
+
 inline const string& StoneString(const StoneColour sc) { return ColourStr[sc]; }
 
 // Assign edges to colours.
-const pair<int,int> edge_pairs[nMarkers] { { edge_top, edge_bot }, { edge_lft, edge_rgt }};
-
-// Identification of players and pretty printing.
-//const vector<string> MarkColourStr { "Red", "Blue" };
-//const vector<char> MarkChr { 'R', 'B', '.' };
+const pair<int,int> edge_pairs[nStoneColours] { { edge_top, edge_bot }, { edge_lft, edge_rgt }};
 
 class HexBoard
 {
@@ -85,7 +79,7 @@ private:
     vector<unsigned> edges[nHexEdges];
     
     // A set for each marker colour to hold IDs of placed markers for quick lookup.
-    unordered_set<int> placed_markers[nMarkers];
+    unordered_set<int> placed_markers[nStoneColours];
     
     inline unsigned xy2idx(unsigned x, unsigned y) { return x + (y * edge_sz); }
     void create_hex_board(void);
