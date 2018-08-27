@@ -150,9 +150,10 @@ bool HexBoard::check_win(StoneColour m)
 //
 void HexBoard::print_board(void)
 {
-    cout << "\n  ^ \n RED   < BLUE >\n  v" << endl;
+    cout << "\n  ^ \n RED   < BLUE >\n  v\n" << endl;
     
     // Number the top row.
+#if 0
     cout << "   ";
     for (int col = 0; col < edge_sz - 1; col++)
         if (col < 10)
@@ -161,12 +162,18 @@ void HexBoard::print_board(void)
             cout << col / 10 << "   ";
     
     cout << (edge_sz - 1) / 10 << endl;
+#endif
 
     cout << "   ";
-    for (int col = 0; col < edge_sz - 1; col++)
-        cout << col % 10 << "   ";
-    
-    cout << (edge_sz - 1) % 10 << endl;
+    for (int col = 0; col < edge_sz - 1; col++)\
+    {
+        if (col < 10)
+            cout << col << "   ";
+        else
+            cout << col << "  ";
+    }
+
+    cout << edge_sz - 1 << endl;
 
     
     for (int row = 0; row < edge_sz; row++)
