@@ -8,9 +8,21 @@
 
 #include <iostream>
 #include <random>
+#include <vector>
 #include "HexBoard.hpp"
 #include "HexGame.hpp"
 #include "Player.hpp"
+
+ostream& operator<< (ostream& out, const vector<int>& v) {
+    out << "[";
+    for (auto itr = v.begin(); itr != v.end(); itr++) {
+        out << *itr;
+        if (itr + 1 != v.end())
+            out << ",";
+    }
+    out << "]";
+    return out;
+}
 
 //
 // Play a game of hex between computer and human.
@@ -32,7 +44,7 @@ void create_game(int edge_sz, bool ai_v_ai, StoneColour human_colour = None)
     {
         cout << "Computer vs Computer: Blue AI goes first." << endl;
         HexGame hg(hb,
-            make_unique<ComputerRandom>(Blue, edge_sz),
+            make_unique<ComputerMC>(Blue, edge_sz),
             make_unique<ComputerRandom>(Red, edge_sz));
         hg.run();
         cout << endl;

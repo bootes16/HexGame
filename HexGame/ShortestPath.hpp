@@ -40,7 +40,7 @@ public:
 
     int shortest_path(int id_i, int id_j, vector<int>& spath);
 
-    int shortest_path(int id_i, int id_j, unordered_set<int>& inc_nodes, vector<int>& spath);
+    int shortest_path(int id_i, int id_j, const unordered_set<int>& inc_nodes, vector<int>& spath);
 
     int shortest_path(int id_i, int id_j) {
         vector<int> spath;

@@ -41,6 +41,8 @@ inline ostream& operator<< (ostream& out, const StoneColour sc)
     return out;
 }
 
+ostream& operator<< (ostream& out, const vector<StoneColour>& scv);
+
 // Enumerations for identifying the 4 board edges.
 enum HexEdges { edge_top = 0, edge_bot, edge_lft, edge_rgt };
 const int nHexEdges {4};
@@ -63,9 +65,17 @@ public:
     
     bool n_places_left(void) { return n_places; }
     
-    bool place_marker(unsigned x, unsigned y, StoneColour m);
+    bool place_marker(unsigned idx, StoneColour sc);
+    bool place_marker(unsigned x, unsigned y, StoneColour sc) {
+        return place_marker(xy2idx(x,y), sc);
+    }
     
-    bool check_win(StoneColour m);
+    vector<StoneColour> get_board_state() { return markers; }
+    int num_empty_nodes() { return n_places; }
+    
+    bool check_win(const vector<StoneColour>& marks, const unordered_set<int>& nodes_set, StoneColour sc);
+    bool check_win(const unordered_set<int>& nodes_set, StoneColour sc);
+    bool check_win(StoneColour sc) { return check_win(placed_markers[sc], sc); }
     
     void print_board(void);
     
@@ -78,7 +88,7 @@ private:
     // Vector of node indexes for each board edge.
     vector<unsigned> edges[nHexEdges];
     
-    // A set for each marker colour to hold IDs of placed markers for quick lookup.
+    // Set of board locations owned by each player.
     unordered_set<int> placed_markers[nStoneColours];
     
     inline unsigned xy2idx(unsigned x, unsigned y) { return x + (y * edge_sz); }

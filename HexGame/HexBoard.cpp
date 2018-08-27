@@ -11,6 +11,14 @@
 #include "HexBoard.hpp"
 #include "ShortestPath.hpp"
 
+ostream& operator<< (ostream& out, const vector<StoneColour>& scv)
+{
+    for (auto sc : scv)
+        out << sc;
+    
+    return out;
+}
+
 //
 // Generate a graph with all the necessary nodes and edges to represent
 // a Hex Game Board:
@@ -95,14 +103,13 @@ void HexBoard::create_hex_board(void)
 //
 // Returns: true if the marker was placed, false if a marker was already present.
 //
-bool HexBoard::place_marker(unsigned x, unsigned y, StoneColour m) {
-    auto idx = xy2idx(x,y);
+bool HexBoard::place_marker(unsigned idx, StoneColour sc) {
     if (markers.at(idx) != None)
         return false;
     
-    placed_markers[m].insert(idx);
+    placed_markers[sc].insert(idx);
     
-    markers[idx] = m;
+    markers[idx] = sc;
     n_places--;
     return true;
 }
@@ -120,31 +127,55 @@ bool HexBoard::place_marker(unsigned x, unsigned y, StoneColour m) {
 //
 // Returns: true if a win condition is found for the marker colour, false otherwise.
 //
-bool HexBoard::check_win(StoneColour m)
+bool HexBoard::check_win(const unordered_set<int>& nodes_set, StoneColour sc)
 {
-    pair<int,int> edge_pair = edge_pairs[m];
+    pair<int,int> edge_pair = edge_pairs[sc];
     ShortestPath sp(g);
     
     for (auto id_i : edges[edge_pair.first])
     {
-        if (placed_markers[m].count(id_i) == 0)
+        if (nodes_set.count(id_i) == 0)
             continue;
         
         for (auto id_j : edges[edge_pair.second])
         {
-            if (placed_markers[m].count(id_j) == 0)
+            if (nodes_set.count(id_j) == 0)
                 continue;
             
-            // find path
             vector<int> spath;
-            if (sp.shortest_path(id_i, id_j, placed_markers[m], spath) != 0)
+            if (sp.shortest_path(id_i, id_j, nodes_set, spath) != 0)
                 return true;
         }
     }
     
     return false;
 }
-
+#if 0
+bool HexBoard::check_win(const unordered_set<int>& nodes_set, StoneColour sc)
+{
+    pair<int,int> edge_pair = edge_pairs[sc];
+    ShortestPath sp(g);
+    
+    for (auto id_i : edges[edge_pair.first])
+    {
+        if (placed_markers[sc].count(id_i) == 0)
+            continue;
+        
+        for (auto id_j : edges[edge_pair.second])
+        {
+            if (placed_markers[sc].count(id_j) == 0)
+                continue;
+            
+            // find path
+            vector<int> spath;
+            if (sp.shortest_path(id_i, id_j, placed_markers[sc], spath) != 0)
+                return true;
+        }
+    }
+    
+    return false;
+}
+#endif
 //
 // Pretty-print the current state of the Hex board.
 //
@@ -153,17 +184,6 @@ void HexBoard::print_board(void)
     cout << "\n  ^ \n RED   < BLUE >\n  v\n" << endl;
     
     // Number the top row.
-#if 0
-    cout << "   ";
-    for (int col = 0; col < edge_sz - 1; col++)
-        if (col < 10)
-            cout << "    ";
-        else
-            cout << col / 10 << "   ";
-    
-    cout << (edge_sz - 1) / 10 << endl;
-#endif
-
     cout << "   ";
     for (int col = 0; col < edge_sz - 1; col++)\
     {

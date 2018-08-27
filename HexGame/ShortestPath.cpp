@@ -143,7 +143,7 @@ int ShortestPath::shortest_path(int id_i, int id_j, vector<int>& spath)
 //
 // Returns: The cost of the shortest path found from id_i to id_j on success, 0 if no path was found.
 //
-int ShortestPath::shortest_path(int id_i, int id_j, unordered_set<int>& inc_nodes, vector<int>& spath)
+int ShortestPath::shortest_path(int id_i, int id_j, const unordered_set<int>& inc_nodes, vector<int>& spath)
 {
     if (id_i >= g.num_nodes() || id_j >= g.num_nodes())
         return -1;
