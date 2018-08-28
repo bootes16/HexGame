@@ -13,24 +13,13 @@
 #include "HexGame.hpp"
 #include "Player.hpp"
 
-ostream& operator<< (ostream& out, const vector<int>& v) {
-    out << "[";
-    for (auto itr = v.begin(); itr != v.end(); itr++) {
-        out << *itr;
-        if (itr + 1 != v.end())
-            out << ",";
-    }
-    out << "]";
-    return out;
-}
-
 //
 // Play a game of hex between computer and human.
 // Read setup and human moves from stdin.
 // After each piece is placed on the game board, check for a winner
 // before continuing.
 //
-void create_game(int edge_sz, bool ai_v_ai, StoneColour human_colour = None)
+void create_game(int edge_sz, bool ai_v_ai, StoneColour human_colour = None, int ai_level = 0)
 {
     if (edge_sz <= 0)
     {
@@ -44,7 +33,7 @@ void create_game(int edge_sz, bool ai_v_ai, StoneColour human_colour = None)
     {
         cout << "Computer vs Computer: Blue AI goes first." << endl;
         HexGame hg(hb,
-            make_unique<ComputerMC>(Blue, edge_sz),
+            make_unique<ComputerMC>(Blue, edge_sz, ai_level),
             make_unique<ComputerRandom>(Red, edge_sz));
         hg.run();
         cout << endl;
@@ -72,7 +61,7 @@ void create_game(int edge_sz, bool ai_v_ai, StoneColour human_colour = None)
     
     HexGame hg(hb,
         make_unique<HumanPlayer>(human_colour),
-        make_unique<ComputerRandom>(computer_colour, edge_sz));
+        make_unique<ComputerMC>(computer_colour, edge_sz, ai_level));
     
     hg.run();
     
@@ -80,13 +69,19 @@ void create_game(int edge_sz, bool ai_v_ai, StoneColour human_colour = None)
 }
 
 //
-// Usage: [-b <size>] [-a] [-c (r)ed|(b)lue]
+// Usage: [-b <size>] [-a] [-c (r)ed|(b)lue] [-l <ai_level>]
+// ai_level - 0-5
 //
+// Parse the command line options.
+//
+const int AI_LVL_MIN = 0;
+const int AI_LVL_MAX = 5;
 int main(int argc, char *argv[])
 {
     int edge_sz {0};
     bool ai_v_ai {false};
     StoneColour human_colour {None};
+    int ai_level {3};
     
     while (--argc > 0)
     {
@@ -110,13 +105,21 @@ int main(int argc, char *argv[])
                 human_colour = Blue;
             break;
             
+        case 'l':
+            ai_level = atoi(argv[argc+1]);
+            if (ai_level > AI_LVL_MAX)
+                ai_level = AI_LVL_MAX;
+            if (ai_level < AI_LVL_MIN)
+                ai_level = AI_LVL_MIN;
+            break;
+            
         default:
-            cout << "Usage: " << argv[0] << " [-b <size>] [-a] [-c (r)ed|(b)lue]\n";
+            cout << "Usage: " << argv[0] << " [-b <size>] [-a] [-c (r)ed|(b)lue] [-l <ai_level>]\n";
             return 0;
         }
     }
     
-    create_game(edge_sz, ai_v_ai, human_colour);
+    create_game(edge_sz, ai_v_ai, human_colour, ai_level);
     
     return 0;
 }

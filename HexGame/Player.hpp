@@ -1,6 +1,6 @@
 //
 //  Player.hpp
-//  HexGame
+//  Player classes for the Hex Game.
 //
 //  Created by Greg on 2018-08-20.
 //  Copyright © 2018 Greg. All rights reserved.
@@ -19,7 +19,6 @@ class Player {
 public:
     Player() = delete;
     Player(StoneColour sc) : sc{sc} {}
-    //Player(const Player& p) : sc{p.sc} {}
     Player(Player&& p) : sc{p.sc} {}
     
     StoneColour get_colour() { return sc; }
@@ -80,11 +79,14 @@ public:
 //
 class ComputerMC : public ComputerPlayer {
 public:
-    ComputerMC(StoneColour sc, int edge_size) : ComputerPlayer(sc, edge_size) {}
-    ComputerMC(const ComputerMC& cp) : ComputerPlayer(cp) {}
-    ComputerMC(ComputerMC&& cp) : ComputerPlayer(cp) {}
+    ComputerMC(StoneColour sc, int edge_size, int iter_factor) :
+        ComputerPlayer(sc, edge_size), iter_factor(iter_factor) {}
+    ComputerMC(const ComputerMC& cp) : ComputerPlayer(cp) { iter_factor = cp.iter_factor; }
+    ComputerMC(ComputerMC&& cp) : ComputerPlayer(cp) { iter_factor = cp.iter_factor; }
     
     StoneColour make_move(HexBoard& h) final;
+private:
+    int iter_factor;
 };
 
 #endif /* PLAYER_HPP */

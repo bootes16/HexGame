@@ -49,8 +49,8 @@ const int nHexEdges {4};
 
 inline const string& StoneString(const StoneColour sc) { return ColourStr[sc]; }
 
-// Assign edges to colours.
-const pair<int,int> edge_pairs[nStoneColours] { { edge_top, edge_bot }, { edge_lft, edge_rgt }};
+// Assign edges to colours. Blue: North/South, Red: East/West.
+const pair<int,int> edge_pairs[nStoneColours] { { edge_lft, edge_rgt }, { edge_top, edge_bot } };
 
 class HexBoard
 {
@@ -62,8 +62,6 @@ public:
         {
             create_hex_board();
         }
-    
-    bool n_places_left(void) { return n_places; }
     
     bool place_marker(unsigned idx, StoneColour sc);
     bool place_marker(unsigned x, unsigned y, StoneColour sc) {

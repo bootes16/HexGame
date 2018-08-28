@@ -1,6 +1,6 @@
 //
 //  HexGame.hpp
-//  HexGame
+//  HexGame class. Uses the board and the players. Runs the game.
 //
 //  Created by Greg on 2018-08-14.
 //  Copyright © 2018 Greg. All rights reserved.

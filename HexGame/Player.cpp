@@ -1,12 +1,13 @@
 //
 //  Player.cpp
-//  HexGame
+//  Player methods to make moves on the board.
 //
 //  Created by Greg on 2018-08-20.
 //  Copyright © 2018 Greg. All rights reserved.
 //
 #include <stdexcept>
 #include <algorithm>
+#include <cmath>
 
 #include "HexBoard.hpp"
 #include "Player.hpp"
@@ -69,83 +70,79 @@ StoneColour ComputerRandom::make_move(HexBoard& h)
 //
 // ComputerMC
 // Computer AI Monte Carlo simulation.
-// Check the board for a winner.
+//
+// For each empty node on the board, that node is set as the start node for the
+// Monte Carlo computer AI. A number of random trials are run for the remainder
+// of the empty nodes. The number of successful trials (wins) for each start node
+// is tracked. The start node associated with the most number of win states is
+// picked as the next move.
+//
+// Difficulty of the AI is set by iter_factor which affects the number of trials.
+// Total trials is spready over the number empty nodes so the AI 'thinking' time
+// is roughly constant for every move, and the AI can do deeper analysis as the
+// game progresses.
 //
 // Returns: the winning stone colour or None if no winner.
 //
 StoneColour ComputerMC::make_move(HexBoard& h)
 {
     vector<StoneColour> markers = h.get_board_state();
-    int num_empty = h.num_empty_nodes();
     
-    // Vector of empty board idexes.
-    vector<int> empty_idx; //(num_empty);
-    cout << "Setup: ";
-    for (int i = 0; i < markers.size(); i++)
+    // A list of node indexes to be repeatedly suffled to get random placement.
+    vector<int> shuffle_idx(markers.size());
+    for (auto i = 0; i < shuffle_idx.size(); i++)
+        shuffle_idx[i] = i;
+
+    int n_trials = pow(10, iter_factor) / h.num_empty_nodes();
+    vector<pair<int,int>> trial_results;
+    for (auto start_idx = 0; start_idx < markers.size(); start_idx++)
     {
-        cout << ColourChr[markers[i]];
-        if (markers[i] == None)
-            empty_idx.push_back(i);
-    }
-    cout << endl;
-    
-    cout << "num: " << markers.size() << "\nnum_empty: " << num_empty << "\nempty_size: " << empty_idx.size() << endl;
-    cout << "empty_idx: " << empty_idx << endl;
-    
-    // Try each empty index as a starting index. Set best_idx to
-    // best candidate for the next move.
-    int best_idx = -1;
-    for (auto start_idx : empty_idx)
-    {
-        cout << "AI trying: " << start_idx << endl;
-        // Copy the markers as they stand.
-        // Set the start_idx and take it out of shuffling.
-        auto tmp_marks = markers;
-        tmp_marks[start_idx] = sc;
+        if (markers[start_idx] != None)
+            continue;
         
-        // Get a list of empty indexes and shuffle them.
-        vector<int> shuffle_idx; //(num_empty - 1);
-        for (int i = 0; i < num_empty; i++)
+        int n_wins = 0;
+        // Set the start_idx in the markers so we don't have to check for
+        // it separately when building the idx_set. Clear after the trials.
+        markers[start_idx] = sc;
+        for (int n_trial = 0; n_trial < n_trials; n_trial++)
         {
-            if (empty_idx[i] == start_idx)
-                continue;
+            // Shuffle the indexes before placing stones.
+            shuffle(shuffle_idx.begin(), shuffle_idx.end(), e);
             
-            shuffle_idx.push_back(empty_idx[i]);
+            // Alternate stone colours. Add idexes for this player to idx_set.
+            StoneColour tmp_sc = static_cast<StoneColour>(!sc);
+            unordered_set<int> idx_set;
+            for (auto i : shuffle_idx)
+            {
+                if (markers[i] == sc || (markers[i] == None && tmp_sc == sc))
+                    idx_set.insert(i);
+                
+                tmp_sc = static_cast<StoneColour>(!tmp_sc);
+            }
+
+            // Check idx_set for a win. Increment metric.
+            if (h.check_win(idx_set, sc))
+                n_wins++;
         }
-        shuffle(shuffle_idx.begin(), shuffle_idx.end(), e);
-        cout << "Shuffle: " << shuffle_idx << endl;
         
-        StoneColour tmp_sc = static_cast<StoneColour>(!sc);
-        for (auto idx : shuffle_idx)
-        {
-            tmp_marks[idx] = tmp_sc;
-            tmp_sc = static_cast<StoneColour>(!tmp_sc);
-        }
-    
-        // Now make a set of all the indexes set to colour sc.
-        unordered_set<int> idx_set;
-        for (int i = 0; i < tmp_marks.size(); i++)
-            if (tmp_marks[i] == sc)
-                idx_set.insert(i);
-    
-        cout << "tmp_marks: " << tmp_marks << endl;
-        // Check for a winning condition for sc.
-        if (h.check_win(idx_set, sc))
-        {
-            best_idx = start_idx;
-            break;
-        }
+        markers[start_idx] = None;
+        trial_results.push_back(make_pair(start_idx, n_wins));
     }
     
-    cout << "best_idx: " << best_idx << endl;
+    // Find the trial result with the greatest success rate.
+    auto max_it = max_element(
+        trial_results.begin(),
+        trial_results.end(),
+        [](auto a, auto b){return a.second < b.second;}
+        );
+
+    auto best_idx = max_it->first;
     
-    // Cannot win.
-    if (best_idx == -1)
-        return None;
-    
+    // Now make the move and place the stone at the best index.
+    // There is no reason for this placement not to work.
     if (!h.place_marker(best_idx, sc))
         throw logic_error("Error attempting to make move.");
-
+        
     if (h.check_win(sc))
     {
         cout << ColourStr[sc] << " (MC) AI wins!\n";
